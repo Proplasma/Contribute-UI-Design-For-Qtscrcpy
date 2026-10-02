@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qtscrcpy Custom Pro Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        /* Dark Theme Variables */
+        :root {
+            --bg-main: #1e1e1e;
+            --bg-panel: #252526;
+            --bg-input: #2d2d30;
+            --border-color: #3e3e42;
+            --border-focus: #007acc;
+            --text-main: #cccccc;
+            --btn-bg: #333337;
+            --btn-hover: #3f3f46;
+            --accent: #007acc; 
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            font-size: 12px; 
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Group Boxes */
+        .group-box {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            position: relative;
+            margin-top: 10px;
+            padding: 14px 10px 10px 10px;
+            background-color: var(--bg-panel);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .group-box-title {
+            position: absolute;
+            top: -9px;
+            left: 8px;
+            background-color: var(--bg-panel);
+            padding: 0 4px;
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Form Inputs */
+        input[type="text"], input[type="number"], select {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 2px 8px;
+            border-radius: 4px;
+            outline: none;
+            height: 26px;
+            width: 100%;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: var(--border-focus);
+        }
+
+        /* Checkboxes */
+        input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 14px;
+            height: 14px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        input[type="checkbox"]:disabled {
+            filter: grayscale(1);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Buttons */
+        .action-btn {
+            background-color: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 2px 12px;
+            height: 26px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.1s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .action-btn:hover { background-color: var(--btn-hover); }
+        .action-btn:active { background-color: #555; }
+        
+        .btn-primary {
+            background-color: #0078d4;
+            border-color: #0078d4;
+            color: white;
+            font-weight: 500;
+        }
+        .btn-primary:hover { background-color: #106ebe; }
+
+        /* Badge Labels for Advanced Display Tab */
+        .prop-badge {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #ccc;
+            width: 130px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid var(--border-color); }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #666; }
+
+        /* Tabs */
+        .tab-btn {
+            padding: 6px 14px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #999;
+            transition: all 0.2s;
+            background-color: var(--bg-main);
+            border-right: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+        }
+        .tab-btn:first-child { border-left: 1px solid var(--border-color); }
+        .tab-btn:hover { color: #ddd; background-color: var(--bg-panel); }
+        .tab-active {
+            border-bottom: 2px solid var(--accent);
+            border-top: 2px solid var(--accent);
+            color: white;
+            background-color: var(--bg-panel);
+        }
+
+        /* Share Screen specific styles */
+        .phone-font { font-family: 'Roboto', sans-serif; }
+        
+        .toolbar-btn {
+            background-color: #333;
+            border: 1px solid #1a1a1a;
+            border-top-color: #555;
+            border-left-color: #555;
+            color: #d4d4d4;
+            width: 38px;
+            height: 34px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: all 0.1s;
+            margin-bottom: 6px;
+        }
+        .toolbar-btn:active {
+            border-top-color: #1a1a1a;
+            border-left-color: #1a1a1a;
+            border-bottom-color: #555;
+            border-right-color: #555;
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.5);
+            background-color: #2a2a2a;
+        }
+
+        .phone-bg {
+            background: linear-gradient(to bottom, #11304d 0%, #06111f 40%, #000000 100%);
+            position: relative;
+        }
+        .phone-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.8), rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.6), rgba(0,0,0,0));
+            background-size: 350px 200px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .fab-button {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: rgba(40, 40, 40, 0.9);
+            border: 1px solid #666;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            cursor: move;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            transition: transform 0.1s;
+            touch-action: none;
+        }
+        .fab-button:active { transform: scale(0.95); }
+
+        #mirror-wrapper { transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col">
+
+    <!-- ==================== STATE 1: DASHBOARD ==================== -->
+    <div id="dashboard-state" class="flex flex-col h-full w-full">
+        
+        <!-- Dashboard Header -->
+        <div class="bg-[#1e1e1e] border-b border-black h-[30px] flex items-center justify-between px-3 shrink-0 select-none">
+            <div class="flex items-center gap-2">
+                <i class="fa-brands fa-android text-[#a4c639]"></i>
+                <span class="text-[13px]">QtScrcpy (Custom Pro)</span>
+            </div>
+            <div class="flex items-center gap-4 text-gray-400">
+                <i class="fa-solid fa-minus hover:text-white cursor-pointer"></i>
+                <i class="fa-regular fa-square hover:text-white cursor-pointer"></i>
+                <i class="fa-solid fa-xmark hover:text-red-500 cursor-pointer"></i>
+            </div>
+        </div>
+
+        <!-- Dashboard Body (4:6 layout) -->
+        <div class="flex-1 flex overflow-hidden p-3 gap-3">
+            
+            <!-- LEFT COLUMN (40%) -->
+            <div class="w-[40%] flex flex-col min-w-[300px] h-full">
+                
+                <div class="flex items-center gap-2 mb-1 shrink-0">
+                    <input type="checkbox" id="use-simple">
+                    <label for="use-simple">Use Simple Mode</label>
+                </div>
+
+                <!-- Simple Mode Group Box -->
+                <div class="group-box flex-1 flex flex-col mb-3 bg-transparent border-0 p-0 mt-0 overflow-y-auto">
+                    
+                    <div class="grid grid-cols-2 gap-2 mb-2 shrink-0">
+                        <button class="action-btn text-blue-400 border-blue-900/50 hover:bg-blue-900/30">WIFI Connect</button>
+                        <button class="action-btn text-blue-400 border-blue-900/50 hover:bg-blue-900/30">USB Connect</button>
+                    </div>
+                    
+                    <!-- Fixed Device List Header -->
+                    <div class="flex justify-between items-center mb-2 text-[11px] shrink-0">
+                        <span>Double click to connect:</span>
+                        <div class="flex items-center gap-1 mt-0.5">
+                            <input type="checkbox" id="auto-update" checked>
+                            <label for="auto-update">auto update</label>
+                        </div>
+                    </div>
+
+                    <!-- Device List -->
+                    <div class="flex-1 bg-[#252526] border border-[#3e3e42] rounded mb-3 p-1 overflow-y-auto min-h-[120px]">
+                        <!-- Device with info and quick ADB button -->
+                        <div class="flex items-center justify-between px-2 py-1.5 bg-[#333337] cursor-pointer rounded hover:bg-[#3f3f46] transition border border-[#555] group mb-1">
+                            <div class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-mobile-screen text-gray-400"></i>
+                                <span class="text-[12px] font-medium text-white">Phone-R3CT104B80P</span>
+                                <span class="text-gray-600 mx-1">|</span>
+                                <span title="Device Battery" class="text-[10px] text-gray-400 flex items-center gap-1"><i class="fa-solid fa-battery-three-quarters text-[#a4c639]"></i> 85%</span>
+                                <span class="text-gray-600 mx-1">|</span>
+                                <span title="Sharing Status" class="text-[10px] text-gray-400 flex items-center gap-1"><i class="fa-solid fa-desktop text-blue-400"></i> Sharing</span>
+                            </div>
+                            <button class="action-btn !h-[22px] !text-[10px] !px-1.5 text-[#007acc] border-transparent hover:border-[#007acc]/50 hover:bg-[#007acc]/10" title="Quick run ADB for this device" onclick="event.stopPropagation();">
+                                <i class="fa-solid fa-terminal mr-1"></i>Run ADB
+                            </button>
+                        </div>
+
+                        <div class="px-2 py-1.5 text-gray-500 text-[11px] mt-1">No other devices found...</div>
+                    </div>
+
+                    <!-- Prominent Start Button -->
+                    <button id="btn-start-mirror" class="w-full py-2.5 bg-[#0078d4] hover:bg-[#106ebe] border border-[#005a9e] font-semibold shadow text-white rounded transition-colors duration-200 shrink-0">
+                        <i class="fa-solid fa-desktop mr-2"></i> Start Screen Share (Mockup)
+                    </button>
+                </div>
+
+                <!-- ADB Command Group Box (Fixed minimum 40% height) -->
+                <div class="group-box flex-none min-h-[40vh] shadow-sm shrink-0">
+                    <!-- Fix Header, add device dropdown -->
+                    <div class="absolute top-[-11px] left-2 bg-[var(--bg-panel)] px-1 flex items-center gap-1.5">
+                        <span class="text-[11px] text-[#999]">adb command:</span>
+                        <select class="bg-[var(--bg-input)] border border-[var(--border-color)] text-[#ccc] rounded px-1 outline-none h-[22px] text-[11px] w-[110px]">
+                            <option value="R3CT104B80P">R3CT104B80P</option>
+                            <option value="all">All devices</option>
+                        </select>
+                        <div class="flex gap-1 ml-1">
+                            <button class="action-btn !h-[22px] !text-[10px] !px-2 text-[#007acc]">execute</button>
+                            <button class="action-btn !h-[22px] !text-[10px] !px-2 text-[#007acc]">terminate</button>
+                            <button class="action-btn !h-[22px] !text-[10px] !px-2 text-[#007acc]">clear</button>
+                        </div>
+                    </div>
+                    
+                    <textarea class="flex-1 bg-[#1e1e1e] border border-[#3e3e42] rounded p-2 text-xs font-mono resize-none outline-none text-[#ccc] w-full mt-3" placeholder="// Enter shell script for the selected device..."></textarea>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (60%) -->
+            <div class="w-[60%] flex flex-col pr-1 h-full">
+                
+                <!-- Wrap top part in scrollable area -->
+                <div class="flex-1 overflow-y-auto flex flex-col pr-1">
+                    <!-- Custom Tab Header -->
+                    <div class="flex select-none shrink-0">
+                        <div class="tab-btn tab-active" data-target="tab-start">Start Config</div>
+                        <div class="tab-btn" data-target="tab-display">Advanced Display</div>
+                        <div class="tab-btn" data-target="tab-config">Advanced Config</div>
+                    </div>
+
+                    <!-- Tab Contents Container -->
+                    <div class="bg-[var(--bg-panel)] border border-[var(--border-color)] border-t-0 p-3 flex flex-col mb-3 shrink-0">
+                        
+                        <!-- TAB 1: Start Config -->
+                        <div id="tab-start" class="tab-pane flex flex-col gap-3">
+                            <div class="flex flex-col gap-2.5">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-[80px]">video source:</span>
+                                    <div class="w-[100px]"><select><option>display</option></select></div>
+                                    <span class="ml-2 w-[55px] text-[#777]">camera:</span>
+                                    <div class="w-[100px]"><select disabled><option>back</option></select></div>
+                                    <button class="action-btn flex-1 text-[#777]" disabled>refresh</button>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="w-[80px]">Codec Mode:</span>
+                                    <div class="flex-1"><select><option>Default (Auto)</option></select></div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="w-[80px]">bit rate:</span>
+                                    <div class="flex gap-1 w-[140px]">
+                                        <input type="number" value="2" class="w-16">
+                                        <select class="flex-1"><option>Mbps</option></select>
+                                    </div>
+                                    <span class="ml-2 w-[65px]">max size:</span>
+                                    <div class="flex-1"><select><option>1080</option></select></div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="w-[80px]">record form:</span>
+                                    <div class="w-[140px]"><select><option>mp4</option></select></div>
+                                    <span class="ml-2 w-[95px]">lock orient:</span>
+                                    <div class="flex-1"><select><option>no lock</option></select></div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="w-[105px]">record save path:</span>
+                                    <div class="flex-1"><input type="text"></div>
+                                    <button class="action-btn text-[#007acc] w-[85px]">select path</button>
+                                </div>
+                                
+                                <!-- Checkboxes Grid -->
+                                <div class="grid grid-cols-3 gap-y-2 gap-x-1 mt-2 text-[11px]">
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-500"><input type="checkbox" disabled> record screen</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-500"><input type="checkbox" disabled> bg record</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" checked> reverse conn</label>
+                                    
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" checked> show fps</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox"> always on top</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox"> screen-off</label>
+                                    
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox"> frameless</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox"> stay awake</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" checked> show toolbar</label>
+                                    
+                                    <label class="flex items-center gap-1 cursor-pointer text-[#a4c639]"><input type="checkbox"> show touches</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-[#a4c639]"><input type="checkbox"> pointer loc</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox"> quit on close</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: Advanced Display -->
+                        <div id="tab-display" class="tab-pane hidden flex-col">
+                            
+                            <div class="flex items-center gap-2 mb-3 border-b border-[#3e3e42] pb-2">
+                                <input type="checkbox" checked>
+                                <span class="font-medium text-[#fff]">Advanced display</span>
+                            </div>
+
+                            <div class="flex flex-col gap-2.5">
+                                
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge">Display mode</span>
+                                    <div class="flex-1"><select><option>Primary display</option></select></div>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge">Display ID</span>
+                                    <div class="flex-1"><input type="text" value="1"></div>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge">Virtual size / DPI</span>
+                                    <div class="flex-1"><input type="text" value="1920x1080/240"></div>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge">Crop</span>
+                                    <div class="flex-1"><input type="text" value="width:height:x:y" class="text-gray-500"></div>
+                                </div>
+
+                                <div class="flex items-center gap-3 py-1">
+                                    <label class="flex items-center gap-2 cursor-pointer text-gray-500 ml-1">
+                                        <input type="checkbox" disabled>
+                                        Resize virtual display with window
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge">IME policy</span>
+                                    <div class="flex-1"><select><option>Server default</option></select></div>
+                                </div>
+
+                                <div class="flex flex-col gap-2 mt-1 ml-1">
+                                    <label class="flex items-center gap-2 cursor-pointer text-gray-300">
+                                        <input type="checkbox" checked> Show system decorations
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-gray-300">
+                                        <input type="checkbox" checked> Destroy content on close
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-gray-300">
+                                        <input type="checkbox"> Keep device active
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center gap-3 mt-1">
+                                    <span class="prop-badge">Start app</span>
+                                    <div class="flex-1"><select></select></div>
+                                    <button class="action-btn btn-primary px-4">refresh</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: Advanced Config -->
+                        <div id="tab-config" class="tab-pane hidden flex-col">
+                            <div class="flex flex-col gap-2.5">
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge border-none w-[120px] text-right justify-end">Language</span>
+                                    <div class="flex-1"><select><option>Automatic</option></select></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge border-none w-[120px] text-right justify-end">Window title</span>
+                                    <div class="flex-1"><input type="text" value="QtScrcpy"></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge border-none w-[120px] text-right justify-end">Push file path</span>
+                                    <div class="flex-1"><input type="text" value="/sdcard/"></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="prop-badge border-none w-[120px] text-right justify-end">Maximum FPS</span>
+                                    <div class="flex-1"><select><option>Unlimited</option></select></div>
+                                </div>
+                                <div class="flex justify-end pt-2 pb-1 border-t border-[#333] mt-2 gap-2">
+                                    <button class="action-btn btn-primary">Save Config</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Global Groups (Always visible below tabs) -->
+                    <div class="grid grid-cols-2 gap-3 shrink-0 mb-3">
+                        
+                        <!-- USB line -->
+                        <div class="group-box mt-0">
+                            <span class="group-box-title">USB line</span>
+                            <div class="flex flex-col gap-2 mt-1">
+                                <div class="flex items-center gap-2">
+                                    <input type="text" class="flex-1" value="Phone" placeholder="name">
+                                    <button class="action-btn text-[#007acc]">update</button>
+                                </div>
+                                <select><option>R3CT104B80P</option></select>
+                                <div class="flex gap-2">
+                                    <button class="action-btn flex-1 text-[#007acc]">start srvr</button>
+                                    <button class="action-btn flex-1 text-[#007acc]">stop srvr</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wireless -->
+                        <div class="group-box mt-0">
+                            <span class="group-box-title">Wireless</span>
+                            <div class="flex flex-col gap-2 mt-1">
+                                <div class="flex items-center gap-1">
+                                    <div class="flex-1"><select><option>192.168.0.1</option></select></div>
+                                    <span>:</span>
+                                    <div class="w-[60px]"><select><option>5555</option></select></div>
+                                </div>
+                                <button class="action-btn w-full text-[#007acc]">connect</button>
+                                <button class="action-btn w-full text-[#007acc]">disconnect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End scroll -->
+
+                <!-- ADB Log (Fixed minimum 40% height) -->
+                <div class="group-box flex-none min-h-[40vh] flex flex-col mb-1 mt-2 shrink-0">
+                    <span class="group-box-title">ADB Log</span>
+                    <textarea class="flex-1 bg-[#1e1e1e] border border-[#3e3e42] rounded p-2 text-[11px] font-mono resize-none outline-none text-green-400 mt-1 w-full" readonly>
+[INFO] Starting QtScrcpy...
+[INFO] Loading config from default path.
+AdbProcessImpl::out:List of devices attached
+R3CT104B80P    device
+
+[INFO] update devices...
+[INFO] adb run
+AdbProcessImpl::out:List of devices attached
+R3CT104B80P    device
+                    </textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== STATE 2: SHARE SCREEN ==================== -->
+    <div id="share-state" class="hidden h-full w-full bg-black/95 items-center justify-center relative">
+        
+        <!-- Top Left Back Button -->
+        <button id="btn-back-dash" class="absolute top-4 left-4 bg-[#252526] hover:bg-[#333] border border-[#454545] text-white px-4 py-2 rounded shadow-lg z-50 flex items-center gap-2 transition">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </button>
+
+        <!-- Main Phone Wrapper (width changes 430px <-> 370px) -->
+        <div id="mirror-wrapper" class="flex flex-row shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-[#444] rounded overflow-hidden" style="width: 430px; height: 750px;">
+            
+            <!-- PHONE SCREEN (Fixed 370px width) -->
+            <div id="phone-container" class="relative phone-bg phone-font h-full flex flex-col items-center shrink-0 overflow-hidden" style="width: 370px;">
+                
+                <!-- Floating Action Button (FAB) -->
+                <div id="fab-btn" class="hidden fab-button" style="top: 80px; right: 20px;" title="Show Toolbar">
+                    <i class="fa-solid fa-toolbox text-lg"></i>
+                </div>
+
+                <!-- Fake Status Bar -->
+                <div class="w-full bg-black/30 h-6 flex justify-between items-center px-2 text-[10px] text-white/90 z-20 absolute top-0 pointer-events-none">
+                    <span>Viettel • 4G</span>
+                    <div class="flex items-center gap-1.5">
+                        <i class="fa-solid fa-signal text-[9px]"></i>
+                        <i class="fa-solid fa-wifi text-[9px]"></i>
+                        <div class="relative flex items-center justify-center border border-white/80 rounded-[2px] w-5 h-3 ml-1">
+                            <span class="text-[8px] font-bold z-10 scale-90">92</span>
+                            <div class="absolute right-[-2px] top-[2px] w-[1px] h-1.5 bg-white/80"></div>
+                            <div class="absolute inset-0 bg-white/60 rounded-[1px] w-[92%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Green FPS Counter -->
+                <div class="absolute top-[28px] left-2 z-30 pointer-events-none">
+                    <span class="text-[#00FF00] font-black text-xl font-mono" style="text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;">FPS 60</span>
+                </div>
+
+                <!-- Android Lockscreen -->
+                <div class="mt-24 flex flex-col items-center z-10 w-full pointer-events-none">
+                    <i class="fa-solid fa-lock text-white/80 text-sm mb-3"></i>
+                    <div class="text-[75px] font-light leading-none text-[#5ac8ff] tracking-tight">06:15</div>
+                    <div class="text-[16px] text-[#5ac8ff] mt-2 font-medium">Fri, October 2</div>
+                </div>
+
+                <!-- Bottom Quick Actions -->
+                <div class="absolute bottom-10 w-full flex justify-between px-8 z-20 pointer-events-none">
+                    <div class="w-11 h-11 rounded-full bg-gray-800/60 backdrop-blur-sm flex justify-center items-center text-white border border-gray-600/50 pointer-events-auto cursor-pointer shadow-lg">
+                        <i class="fa-solid fa-phone text-sm transform rotate-90"></i>
+                    </div>
+                    <div class="w-11 h-11 rounded-full bg-gray-800/60 backdrop-blur-sm flex justify-center items-center text-white border border-gray-600/50 pointer-events-auto cursor-pointer shadow-lg">
+                        <i class="fa-solid fa-camera text-sm"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT TOOLBAR (Fixed 60px width) -->
+            <div id="right-toolbar" class="h-full bg-[#2d2d30] flex flex-col items-center pt-2 pb-2 border-l border-[#111] z-30 shrink-0 shadow-[-5px_0_15px_rgba(0,0,0,0.5)]" style="width: 60px;">
+                
+                <!-- Collapse Button -->
+                <div id="btn-collapse" class="toolbar-btn mb-2 bg-[#222] hover:bg-gray-700 border-gray-600" title="Hide Toolbar">
+                    <i class="fa-solid fa-angles-right text-[#a4c639] text-[14px]"></i>
+                </div>
+
+                <div class="w-8 h-px bg-[#444] mb-2 shrink-0"></div>
+
+                <!-- Standard Android Actions -->
+                <div class="toolbar-btn shrink-0" title="Power"><i class="fa-solid fa-power-off text-[14px]"></i></div>
+                <!-- Nút Always on Top (Ghim) mới được thêm -->
+                <div class="toolbar-btn shrink-0" title="Always on Top"><i class="fa-solid fa-thumbtack text-[13px]"></i></div>
+                
+                <div class="toolbar-btn shrink-0" title="Volume Up"><i class="fa-solid fa-volume-high text-[13px]"></i></div>
+                <div class="toolbar-btn shrink-0" title="Volume Down"><i class="fa-solid fa-volume-low text-[13px]"></i></div>
+                
+                <div class="w-8 h-px bg-[#444] mb-2 mt-2 shrink-0"></div>
+
+                <!-- Navigation -->
+                <div class="toolbar-btn shrink-0"><div class="w-3.5 h-3.5 border-2 border-current rounded-[2px]"></div></div> <!-- Recent -->
+                <div class="toolbar-btn shrink-0"><i class="fa-regular fa-circle text-[14px]"></i></div> <!-- Home -->
+                <div class="toolbar-btn shrink-0"><i class="fa-solid fa-angle-left text-[16px]"></i></div> <!-- Back -->
+                
+                <div class="w-8 h-px bg-[#444] mb-2 mt-2 shrink-0"></div>
+                
+                <!-- Utils -->
+                <div class="toolbar-btn shrink-0"><i class="fa-solid fa-camera text-[13px]"></i></div>
+                <div class="toolbar-btn shrink-0"><i class="fa-solid fa-rotate text-[13px]"></i></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // State Elements
+            const dashboardState = document.getElementById('dashboard-state');
+            const shareState = document.getElementById('share-state');
+            const btnStartMirror = document.getElementById('btn-start-mirror');
+            const btnBackDash = document.getElementById('btn-back-dash');
+
+            // View Switching
+            btnStartMirror.addEventListener('click', () => {
+                dashboardState.classList.add('hidden');
+                dashboardState.classList.remove('flex');
+                shareState.classList.remove('hidden');
+                shareState.classList.add('flex');
+            });
+
+            btnBackDash.addEventListener('click', () => {
+                shareState.classList.add('hidden');
+                shareState.classList.remove('flex');
+                dashboardState.classList.remove('hidden');
+                dashboardState.classList.add('flex');
+            });
+
+            // Tab Logic
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(t => t.classList.remove('tab-active'));
+                    btn.classList.add('tab-active');
+                    
+                    const target = btn.getAttribute('data-target');
+                    tabPanes.forEach(pane => {
+                        if (pane.id === target) {
+                            pane.classList.remove('hidden');
+                            pane.classList.add('flex');
+                        } else {
+                            pane.classList.add('hidden');
+                            pane.classList.remove('flex');
+                        }
+                    });
+                });
+            });
+
+            // Toolbar Toggle Logic
+            const mirrorWrapper = document.getElementById('mirror-wrapper');
+            const rightToolbar = document.getElementById('right-toolbar');
+            const btnCollapse = document.getElementById('btn-collapse');
+            const fabBtn = document.getElementById('fab-btn');
+
+            btnCollapse.addEventListener('click', () => {
+                // Hide toolbar
+                rightToolbar.style.display = 'none';
+                // Shrink wrapper (removes 60px)
+                mirrorWrapper.style.width = '370px';
+                // Show FAB
+                fabBtn.classList.remove('hidden');
+            });
+
+            // Draggable FAB Logic
+            const phoneContainer = document.getElementById('phone-container');
+            let isDragging = false;
+            let currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+
+            // Touch events
+            fabBtn.addEventListener('touchstart', dragStart, { passive: false });
+            document.addEventListener('touchend', dragEnd, { passive: false });
+            document.addEventListener('touchmove', drag, { passive: false });
+
+            // Mouse events
+            fabBtn.addEventListener('mousedown', dragStart);
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('mousemove', drag);
+
+            function dragStart(e) {
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                if (e.target === fabBtn || fabBtn.contains(e.target)) {
+                    isDragging = true;
+                }
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault(); // prevent scroll
+                    if (e.type === 'touchmove') {
+                        currentX = e.touches[0].clientX - initialX;
+                        currentY = e.touches[0].clientY - initialY;
+                    } else {
+                        currentX = e.clientX - initialX;
+                        currentY = e.clientY - initialY;
+                    }
+
+                    // Boundaries check (370px width, 750px height)
+                    const maxX = phoneContainer.clientWidth - fabBtn.clientWidth;
+                    const maxY = phoneContainer.clientHeight - fabBtn.clientHeight;
+                    
+                    // Allow movement relative to initial positioning logic
+                    xOffset = currentX;
+                    yOffset = currentY;
+                    
+                    setTranslate(currentX, currentY, fabBtn);
+                }
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+            }
+
+            function dragEnd(e) {
+                if (isDragging) {
+                    isDragging = false;
+                    
+                    // Simple click detection (if barely moved, consider it a click)
+                    if (Math.abs(xOffset) < 5 && Math.abs(yOffset) < 5) {
+                        // Re-open toolbar
+                        mirrorWrapper.style.width = '430px';
+                        setTimeout(() => { rightToolbar.style.display = 'flex'; }, 50); // slight delay for smooth transit
+                        fabBtn.classList.add('hidden');
+                        
+                        // Reset FAB position offsets
+                        xOffset = 0; yOffset = 0;
+                        setTranslate(0, 0, fabBtn);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
